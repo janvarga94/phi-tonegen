@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pizzicato/0.6.4/Pizzicato.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <button onclick="play()">play</button>
+    <button onclick="stop()">stop</button>
+    <button onclick="add()">add</button>
+    <div id="mix-container"></div>
+    <script>
+      const goldenRatio = 1.61803398875;
+      var group;
+      var isPlaying = false;
+      function play() {
+        stop();
+        isPlaying = true;
+        const powerVolumes = $(".one-row").map((idx, val) => {
+          return {
+            power: +$(val)
+              .children(".power")
+              .val(),
+            volume: +$(val)
+              .children(".volume")
+              .val()
+          };
+        });
+        console.log("powerVolumes", powerVolumes);
+
+        const tones = powerVolumes.map((idx, powerVolume) => {
+          const sound = new Pizzicato.Sound({
+            source: "wave",
+            options: {
+              frequency: 49.97 * goldenRatio ** powerVolume.power
+            }
+          });
+          sound.volume = powerVolume.volume;
+
+          return sound;
+        });
+
+        group = new Pizzicato.Group(tones);
+        group.play();
+      }
+      function stop() {
+        if (group) group.stop();
+        isPlaying = false;
+      }
+      function add() {
+        stop();
+        const currentNumberOfRows = $(".one-row").length;
+        let volume = 0.1 - currentNumberOfRows * 0.03;
+        if (volume <= 0) volume = 0.005;
+        $("#mix-container").append(
+          `<div class="one-row">
+            power value <input type="number" class="power" value="${currentNumberOfRows +
+              1}"/> 
+            volume <input type="number" class="volume"  value="${volume}"/> 
+            <button onclick="removeRow(this)"> x </button> 
+            current volume <span class="current-volume"></span>
+          </div>`
+        );
+      }
+      function removeRow(element) {
+        $(element)
+          .parent()
+          .remove();
+
+        if (isPlaying) {
+          stop();
+          play();
+        }
+      }
+    </script>
+  </body>
+</html>
