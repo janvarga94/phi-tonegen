@@ -8,9 +8,11 @@
     ></script>
   </head>
   <body>
-    harmonics:<button onclick="add()">add harmonic</button>
+    harmonics: &nbsp;<button onclick="add()">add harmonic</button>
+    <br>
     <br>
     <div id="mix-container"></div>
+    <br>
     careful not to have volumes too loud &nbsp;
     <button onclick="play()">play</button>
     <button onclick="stop()">stop</button>
@@ -60,9 +62,9 @@
         if (volume <= 0) volume = 0.005;
         $("#mix-container").append(
           `<div class="one-row">
-            ${startingFrequency}*phi^ <input type="number" class="power" value="${currentNumberOfRows +
-              1}"/> 
-              &nbsp;&nbsp;&nbsp;&nbsp;volume  <input type="number" class="volume"  value="${volume}"/> 
+            ${startingFrequency}*phi^ <input type="number" style="width:50px;" class="power" value="${currentNumberOfRows +
+              1}"/> Hz
+              &nbsp;&nbsp;&nbsp;&nbsp;volume  <input type="number"  style="width:70px;" class="volume"  value="${volume}"/> 
             <button onclick="removeRow(this)"> x </button> 
             
           </div>`
