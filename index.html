@@ -8,11 +8,14 @@
     ></script>
   </head>
   <body>
+    harmonics:<button onclick="add()">add harmonic</button>
+    <br>
+    <div id="mix-container"></div>
+    careful not to have volumes too loud &nbsp;
     <button onclick="play()">play</button>
     <button onclick="stop()">stop</button>
-    <button onclick="add()">add</button>
-    <div id="mix-container"></div>
     <script>
+      const startingFrequency = 49.97;
       const goldenRatio = 1.61803398875;
       var group;
       var isPlaying = false;
@@ -35,7 +38,7 @@
           const sound = new Pizzicato.Sound({
             source: "wave",
             options: {
-              frequency: 49.97 * goldenRatio ** powerVolume.power
+              frequency: startingFrequency * goldenRatio ** powerVolume.power
             }
           });
           sound.volume = powerVolume.volume;
@@ -57,14 +60,20 @@
         if (volume <= 0) volume = 0.005;
         $("#mix-container").append(
           `<div class="one-row">
-            power value <input type="number" class="power" value="${currentNumberOfRows +
+            ${startingFrequency}*phi^ <input type="number" class="power" value="${currentNumberOfRows +
               1}"/> 
-            volume <input type="number" class="volume"  value="${volume}"/> 
+              &nbsp;&nbsp;&nbsp;&nbsp;volume  <input type="number" class="volume"  value="${volume}"/> 
             <button onclick="removeRow(this)"> x </button> 
-            current volume <span class="current-volume"></span>
+            
           </div>`
         );
       }
+      add();
+      add();
+      add();
+      add();
+      add();
+      add();
       function removeRow(element) {
         $(element)
           .parent()
