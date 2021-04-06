@@ -24,11 +24,13 @@
       function play() {
         stop();
         isPlaying = true;
-        let volume = +$(val)
+       
+        const powerVolumes = $(".one-row").map((idx, val) => {
+          let volume = +$(val)
               .children(".volume")
               .val();
         if(volume > 0.2) volume = 0.2;    
-        const powerVolumes = $(".one-row").map((idx, val) => {
+
           return {
             power: +$(val)
               .children(".power")
