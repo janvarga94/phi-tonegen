@@ -59,27 +59,27 @@
         if (group) group.stop();
         isPlaying = false;
       }
-      function add() {
+      function add(power = undefined, volume = undefined) {
         stop();
         const currentNumberOfRows = $(".one-row").length;
-        let volume = 0.1 - currentNumberOfRows * 0.03;
+        volume = volume || 0.1 - currentNumberOfRows * 0.03;
         if (volume <= 0) volume = 0.005;
         $("#mix-container").append(
           `<div class="one-row">
-            ${startingFrequency}*phi^ <input type="number" style="width:50px;" class="power" value="${currentNumberOfRows +
-              1}"/> Hz
+            ${startingFrequency}*phi^ <input type="number" style="width:50px;" class="power" value="${power ?? (currentNumberOfRows +
+              1)}"/> Hz
               &nbsp;&nbsp;&nbsp;&nbsp;volume  <input type="number"  style="width:70px;" class="volume"  value="${volume}"/> 
             <button onclick="removeRow(this)"> x </button> 
             
           </div>`
         );
       }
-      add();
-      add();
-      add();
-      add();
-      add();
-      add();
+      add(0, 10);
+      add(1, 5);
+      add(2, 1);
+      add(3, 0.1);
+      add(4, 0.02);
+      add(5, 0.005);
       function removeRow(element) {
         $(element)
           .parent()
