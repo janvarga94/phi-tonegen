@@ -13,6 +13,11 @@
     <br>
     <div id="mix-container"></div>
     <br>
+
+    master volume <input min="0" max="1" id="masterVolume" value="1" type="number">
+    <br>
+    <br>
+
     careful not to have volumes too loud &nbsp;
     <button onclick="play()">play</button>
     <button onclick="stop()">stop</button>
@@ -21,6 +26,7 @@
       const goldenRatio = 1.61803398875;
       var group;
       var isPlaying = false;
+
       function play() {
         stop();
         isPlaying = true;
@@ -47,7 +53,7 @@
               frequency: startingFrequency * goldenRatio ** powerVolume.power
             }
           });
-          sound.volume = powerVolume.volume;
+          sound.volume = powerVolume.volume * +$("#masterVolume").val();
 
           return sound;
         });
